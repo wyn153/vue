@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 1 -->
+      <h1>{{msg}}</h1>
+      <!-- 2.方法 -->
+      <h2>{{num}}</h2>
+      <button @click="fn">点击+</button>
+      <!-- 3.自定义属性 -->
+      <h3 v-color>颜色</h3>
+      <!-- 4.计算属性 -->
+      <h4>{{aaa}}</h4>
+      <!-- 5.监听属性 -->
+      <div>
+        <p><input type="text" v-model="firstname" /></p>
+        <p><input type="text" v-model="lastname" /></p>
+        <p><input type="text" v-model="fullname" /></p>
+        <h5>{{fullname}}</h5>
+      </div>
+      
+    </div>
+  </body>
+</html>
+<script src="vue.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    // 1.
+    data: {
+      msg: "你好世界",
+      num: 0,
+      firstname: "",
+      lastname: "",
+      fullname: "",
+    },
+    // 2.方法
+    methods: {
+      fn() {
+        this.num++;
+      },
+    },
+    //  3.自定义属性
+    directives: {
+      color: {
+        bind: function (el) {
+          el.style.color = "red";
+        },
+      },
+    },
+    // 4. 计算属性：不存在缓存
+    computed: {
+      aaa() {
+        return this.msg;
+      },
+    },
+
+    // 5. 监听属性
+    watch: {
+      firstname: function (val) {
+        this.fullname = val + "" + this.lastname;
+      },
+      lastname: function (val) {
+        this.fullname = this.firstname + "" + val;
+      },
+    },
+  });
+</script>

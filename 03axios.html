@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+      span{
+          display:inline-block;
+          width: 100px;
+          border: 1px solid black;
+      }
+  </style>
+  <body>
+
+    <div id="app">
+        <button @click='aa'>点击显示数据</button>
+        <br>
+         <span>序号</span>
+         <span>姓名</span>
+         <span>密码</span>
+          <div :key='item._id' v-for='(item,index) in arr' class="box">
+              <span>{{index+1}}</span>
+              <span>{{item.username}}</span>
+              <span>{{item.password}}</span>
+          </div>
+    </div>
+  </body>
+</html>
+<script src="./vue.js"></script>
+<script
+  src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"
+></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      show:true,
+      username: "",
+      password: "",
+      id: "",
+      arr:[]
+    },
+    methods:{
+        
+        aa(){
+            axios({
+        url: "http://localhost:5001/vuestudy",
+        method: "get",
+      })
+        .then((response) => {
+          //   拿到全部数据
+        //   console.log(response.data);
+          this.arr= response.data
+          console.log(this.arr);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        }
+    },
+
+    // created 创建之后，data和methods已经部署完成
+    created() {
+      //   console.log("进入了生命周期created里面了");
+     
+            axios({
+        url: "http://localhost:5001/vuestudy",
+        method: "get",
+      })
+        .then((response) => {
+          //   拿到全部数据
+        //   console.log(response.data);
+ 
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  });
+</script>
